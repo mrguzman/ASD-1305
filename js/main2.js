@@ -1,6 +1,4 @@
-// ASD
-// April 2013
-// Project 4
+//ASD 2013-05
 // By Juan J Guzman
 
 
@@ -12,45 +10,9 @@ $("#home").on("pageinit", function(){
 	$('saveButton').on("click", function(){
 	//VALIDATE required information before allowing the user to proceed...
 	
-		function required(r){
-			var checkFname = $('#fName');
-			var checkLname = $('#lName');
-			var checkNum = $('#phoneNum');
+		saveAppt(this.key);
+	
 			
-			flagMessage.innerHTML = "";
-			checkFname.style.border = "1px solid black";
-			checkLname.style.border = "1px solid black";
-			checkNum.style.border = "1px solid black";
-			
-			var flagArray = [];
-			if (checkFname.value === ""){
-				var fNameFlag = "Please Enter A First Name";
-				checkFname.style.border ="1px solid red";
-				flagArray.push(fNameFlag);
-			}
-				if (checkLname.value === ""){
-				var lNameFlag = "Please Enter A Last Name";
-				checkLname.style.border ="1px solid red";
-				flagArray.push(lNameFlag);
-			}
-				if (checkNum.value === ""){
-				var numFlag = "Please Enter A Contact Number";
-				checkNum.style.border ="1px solid red";
-				flagArray.push(numFlag);
-			}
-			if (flagArray.length >=  1){
-				for (var i=0, j=flagArray.length; i < j; i++){
-					var text = document.createElement('li');
-					text.innerHTML = flagArray[i];
-					flagMessage.appendChild(text);
-				}
-				r.preventDefault();
-				return false;
-			}else{
-				saveAppt(this.key);
-			}
-			
-		}
 	});
 
 	//SAVE DATA to LocalStorage.
@@ -139,7 +101,7 @@ $("#home").on("pageinit", function(){
 	
 	//DISPLAY saved data to user when "Display All Current Leads" link is clicked.
 	
-	$(".display").bind("click", function (){
+	$(".display").on("click", function (){
 		if (localStorage.length === 0){
 			var loadConfirm = confirm("No Appointments Currently Scheduled. Load Placeholders?");
 			if (loadConfirm){
