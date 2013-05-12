@@ -1,27 +1,16 @@
 //ASD 2013-05
-// By Juan J Guzman
+//Juan J Guzman
+
+
 
 
 $("#home").on("pageinit", function(){
 						
-
-	//Save info to local storage
 	
-	$('saveButton').on("click", function(){
-	//VALIDATE required information before allowing the user to proceed...
-	
-		saveAppt(this.key);
-	
-			
-	});
 
 	//SAVE DATA to LocalStorage.
 		function saveAppt(key){
-		if(!key){
-			var id = Math.floor(Math.random()*100000001);
-		}else{
-			var id = key;
-		}
+		var id = Math.floor(Math.random()*100000001);
 		var item = {};
 			item.fName = ["First Name:", $("#fName").val()];
 			item.lName = ["Last Name:", $("#lName").val()];
@@ -35,9 +24,40 @@ $("#home").on("pageinit", function(){
 			
 			alert("Appointment Saved");
 			
-			
+			//console.log(key);
 			
 	}
+	
+	$("#saveButton").on("click", saveAppt);
+	
+		//Load Place holder if no data has been saved in local storage
+	
+	function loadPlaceHolder (){
+		for (var n in placeHolder){
+			var id = Math.floor(Math.random()*100000001);
+			localStorage.setItem(id, JSON.stringify(placeHolder[n]));
+		}
+	}
+	
+	//Clear All Data in storage.
+	
+	$('.deleteAll').click(clearData);
+	
+	
+	function clearData(){
+		if(localStorage.length === 0){
+			alert("No Appointments Are Currently Scheduled");
+		}else {
+			var deleteConfirm = confirm("Are you sure you wish to DELETE ALL appointments?");
+			if(deleteConfirm){
+				localStorage.clear();
+				alert("All appointments have been deleted.")
+				}else{
+					alert("Delete Cancelled");
+					}
+			}
+		}
+
 	
 	//Dynamically create individual button/links to edit and delete each item.
 	
@@ -111,9 +131,9 @@ $("#home").on("pageinit", function(){
 					alert("Placeholders have been cancelled");
 				}
 		}
-		var createDiv = $('<article class="items" />').appendTo(".content");		//Creates <article> element to dipslay data as a list item
-		$(".items").wrapInner('<ul class="appt" />');
 		for (var i=0, len=localStorage.length; i<len; i++){		//Loops through key in local storage.
+			$('<article class="items" />').appendTo(".content");		//Creates <article> element to dipslay data as a list item
+			$('<ul class="appt" />').appendTo(".items");
 			var createLi = $('<li class="keyList" />');
 			var linksLi = $('<li />'); 
 			$(".appt").append(createLi);
@@ -136,34 +156,5 @@ $("#home").on("pageinit", function(){
 	});
 	
 	
-	//Load Place holder if no data has been saved in local storage
-	
-	function loadPlaceHolder (){
-		for (var n in placeHolder){
-			var id = Math.floor(Math.random()*100000001);
-			localStorage.setItem(id, JSON.stringify(placeHolder[n]));
-		}
-	}
-	
-	//Clear All Data in storage.
-	
-	$('.deleteAll').click(clearData);
-	
-	
-	function clearData(){
-		if(localStorage.length === 0){
-			alert("No Appointments Are Currently Scheduled");
-		}else {
-			var deleteConfirm = confirm("Are you sure you wish to DELETE ALL appointments?");
-			if(deleteConfirm){
-				localStorage.clear();
-				alert("All appointments have been deleted.")
-				}else{
-					alert("Delete Cancelled");
-					}
-			}
-		}
-		
-	
-	
+
 });
