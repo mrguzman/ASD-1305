@@ -2,11 +2,66 @@
 //Juan J Guzman
 
 
-
+//HOME PAGE-->
 
 $("#home").on("pageinit", function(){
-						
+
+	//Clear All Data in storage using the "Delete All Saved Appointments" button
 	
+	$('.deleteAll').click(clearData);
+	
+	
+	function clearData(){
+		if(localStorage.length === 0){
+			alert("No Appointments Are Currently Scheduled");
+		}else {
+			var deleteConfirm = confirm("Are you sure you wish to DELETE ALL appointments?");
+			if(deleteConfirm){
+				localStorage.clear();
+				alert("All appointments have been deleted.")
+				}else{
+					alert("Delete Cancelled");
+					}
+			}
+		}
+
+	//DISPLAY saved data to user when "View Appointments" button or "Display" button from navbar is clicked.
+	
+	$(".display").on("click", function (){
+		
+			if (localStorage.length === 0){
+				var loadConfirm = confirm("No Appointments Saved. Load Placeholders?");
+					if (loadConfirm){
+						loadPlaceHolder ();
+						alert("Placeholders have been loaded!");
+					}else{
+						alert("Placeholders cancelled.");
+					}
+			};
+			for (var i=0, len=localStorage.length; i<len; i++){					//Loop through items in local storage
+				var savedApptsUl = $("<ul class='savedAppts' />");
+				savedApptsUl.appendTo(".content");								//Create UL to hold all saved appointments
+				var singleApptLi = $("<li class='singleAppt' />");
+				singleApptLi.appendTo(savedApptsUl);							//Create list item for each individual saved
+				var apptDetailsUl = $("<ul class='apptDetails' />");
+				apptDetailsUl.appendTo(singleApptLi);							//Creates UL to hold appointment details
+				var editLi = $("<li class='editAppt' />");						//Creates LI to hold edit features for each saved Appt
+				var key = localStorage.key(i);
+				var value = localStorage.getItem(key);
+				var object = JSON.parse(value);
+				for (var n in object){											//Loop through the object contained in each key
+					var detailsLi = $("<li class='details' />");
+					detailsLi.appendTo(apptDetailsUl);							//Create the LI for each value in the appointment detail and attach to UL
+					var labelValue = object[n][0]+" "+object[n][1];				
+					detailsLi.wrapInner(labelValue);
+					editLi.appendTo(detailsLi)
+				};
+				createLinks(localStorage.key(i), editLi)
+			};
+	});
+
+//FORM PAGE-->
+
 
 	//SAVE DATA to LocalStorage.
 		function saveAppt(key){
@@ -30,7 +85,16 @@ $("#home").on("pageinit", function(){
 	
 	$("#saveButton").on("click", saveAppt);
 	
-		//Load Place holder if no data has been saved in local storage
+	
+
+
+
+
+
+//DISPLAY PAGE-->
+
+
+	//Load Place holder if no data has been saved in local storage
 	
 	function loadPlaceHolder (){
 		for (var n in placeHolder){
@@ -38,43 +102,25 @@ $("#home").on("pageinit", function(){
 			localStorage.setItem(id, JSON.stringify(placeHolder[n]));
 		}
 	}
-	
-	//Clear All Data in storage.
-	
-	$('.deleteAll').click(clearData);
-	
-	
-	function clearData(){
-		if(localStorage.length === 0){
-			alert("No Appointments Are Currently Scheduled");
-		}else {
-			var deleteConfirm = confirm("Are you sure you wish to DELETE ALL appointments?");
-			if(deleteConfirm){
-				localStorage.clear();
-				alert("All appointments have been deleted.")
-				}else{
-					alert("Delete Cancelled");
-					}
-			}
-		}
 
-	
+
 	//Dynamically create individual button/links to edit and delete each item.
 	
-	function createLinks(key, linksLi){
+	function createLinks(key, editLi){
 		var editButton = $('<a href="#">Edit</a>');
 		editButton.key = key;
 		$(editButton).click(editLead);
-		$(linksLi).append(editButton);
+		$(editLi).append(editButton);
 	
 		
 		var deleteButton = $('<a href="#">Delete</a>');
 		deleteButton.key = key;
 		$(deleteButton).click(deleteLead);
-		$(linksLi).append(deleteButton);
+		$(editLi).append(deleteButton);
 		
 	}
-	
+
+
 	//Function to EDIT each item individually
 	
 	function editLead(){
@@ -101,6 +147,7 @@ $("#home").on("pageinit", function(){
 		 
 
 	}
+
 	
 	//Function to DELETE each item individually
 	
@@ -115,46 +162,4 @@ $("#home").on("pageinit", function(){
 		}
 	}
 	
-	
-	
-	
-	
-	//DISPLAY saved data to user when "Display All Current Leads" link is clicked.
-	
-	$(".display").on("click", function (){
-		if (localStorage.length === 0){
-			var loadConfirm = confirm("No Appointments Currently Scheduled. Load Placeholders?");
-			if (loadConfirm){
-				loadPlaceHolder();
-				alert("Placeholders have been loaded");
-				}else{
-					alert("Placeholders have been cancelled");
-				}
-		}
-		for (var i=0, len=localStorage.length; i<len; i++){		//Loops through key in local storage.
-			$('<article class="items" />').appendTo(".content");		//Creates <article> element to dipslay data as a list item
-			$('<ul class="appt" />').appendTo(".items");
-			var createLi = $('<li class="keyList" />');
-			var linksLi = $('<li />'); 
-			$(".appt").append(createLi);
-			var key = localStorage.key(i);
-			var value = localStorage.getItem(key);
-			var obj = JSON.parse(value);
-			var makeSubList = $('<ul class="savedData"/>');
-			$(createLi).append(makeSubList);
-			for (var n in obj){
-				var makeSubLi = $('<li />');
-				$(makeSubList).append(makeSubLi);
-				var optSubText = obj[n][0]+" "+obj[n][1];
-				$(makeSubLi).wrapInner(optSubText);
-				$(makeSubList).append(linksLi);
-			}
-		
-			createLinks(localStorage.key(i), linksLi);
-		}
-
-	});
-	
-	
-
 });
