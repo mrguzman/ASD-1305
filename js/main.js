@@ -38,9 +38,10 @@ $("#home").on("pageinit", function(){
 						alert("Placeholders cancelled.");
 					}
 			};
-			for (var i=0, len=localStorage.length; i<len; i++){					//Loop through items in local storage
-				var savedApptsUl = $("<ul class='savedAppts' />");
+				$(".content").empty();
+				var savedApptsUl = $("<ul class='savedAppts'/>");
 				savedApptsUl.appendTo(".content");								//Create UL to hold all saved appointments
+			for (var i=0, len=localStorage.length; i<len; i++){					//Loop through items in local storage
 				var singleApptLi = $("<li class='singleAppt' />");
 				singleApptLi.appendTo(savedApptsUl);							//Create list item for each individual saved
 				var apptDetailsUl = $("<ul class='apptDetails' />");
@@ -109,13 +110,13 @@ $("#home").on("pageinit", function(){
 	function createLinks(key, editLi){
 		var editButton = $('<a href="#">Edit</a>');
 		editButton.key = key;
-		$(editButton).click(editLead);
+		$(editButton).on("click", editLead);
 		$(editLi).append(editButton);
 	
 		
 		var deleteButton = $('<a href="#">Delete</a>');
 		deleteButton.key = key;
-		$(deleteButton).click(deleteLead);
+		$(deleteButton).on("click", deleteLead);
 		$(editLi).append(deleteButton);
 		
 	}
@@ -137,12 +138,12 @@ $("#home").on("pageinit", function(){
 		$('#comments').value = item.comments[1];
 	
 		
-		$("#saveButton").click(saveAppt);
+		$("#saveButton").on("click", saveAppt);
 		
 		
 		$('#saveButton').value = "Edit Lead";
 		var editSaveButton = $('#saveButton');
-		$('#saveButton').click(required);
+		$('#saveButton').on("click", required);
 		editSaveButton.key = this.key;
 		 
 
