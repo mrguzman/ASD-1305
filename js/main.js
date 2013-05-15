@@ -38,11 +38,8 @@ $("#home").on("pageinit", function(){
 						alert("Placeholders cancelled.");
 					}
 			};
-				
-				var article = $("<article class='content' />");
-				article.appendTo("#displayAll");
 				$(".content").empty();
-				var savedApptsUl = $("<ul class='savedAppts' />");
+				var savedApptsUl = $("<ul class='savedAppts'/>");
 				savedApptsUl.appendTo(".content");								//Create UL to hold all saved appointments
 			for (var i=0, len=localStorage.length; i<len; i++){					//Loop through items in local storage
 				var singleApptLi = $("<li class='singleAppt' />");
