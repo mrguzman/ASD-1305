@@ -38,13 +38,17 @@ $("#home").on("pageinit", function(){
 						alert("Placeholders cancelled.");
 					}
 			};
+				
+				var article = $("<article class='content' />");
+				article.appendTo("#displayAll");
+				$(".content").empty();
 				var savedApptsUl = $("<ul class='savedAppts' />");
 				savedApptsUl.appendTo(".content");								//Create UL to hold all saved appointments
+			for (var i=0, len=localStorage.length; i<len; i++){					//Loop through items in local storage
 				var singleApptLi = $("<li class='singleAppt' />");
 				singleApptLi.appendTo(savedApptsUl);							//Create list item for each individual saved
 				var apptDetailsUl = $("<ul class='apptDetails' />");
 				apptDetailsUl.appendTo(singleApptLi);							//Creates UL to hold appointment details
-			for (var i=0, len=localStorage.length; i<len; i++){					//Loop through items in local storage
 				var editLi = $("<li class='editAppt' />");						//Creates LI to hold edit features for each saved Appt
 				var key = localStorage.key(i);
 				var value = localStorage.getItem(key);
