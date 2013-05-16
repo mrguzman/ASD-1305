@@ -9,7 +9,7 @@ var placeHolder = {
 		"interest": ["Interest Level:", "committed"],
 		"comments": ["Commens:", "Notes Test"]
  	},
- 		"lead2": {
+ 	"lead2": {
 		"fName": ["First Name:", "Nena"],
 		"lName": ["Last Name:", "Weinsteiger De Guzman"],
 		"phoneNum": ["Phone Number:", "4075552008"],
@@ -19,7 +19,7 @@ var placeHolder = {
 		"interest": ["Interest Level:", "high"],
 		"comments": ["Commens:", "Wife"]
  	},
- 		"lead3": {
+ 	"lead3": {
 		"fName": ["First Name:", "Evan"],
 		"lName": ["Last Name:", "Guzman Weinsteiger"],
 		"phoneNum": ["Phone Number:", "4075551234"],

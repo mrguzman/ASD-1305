@@ -44,7 +44,7 @@ $("#home").on("pageinit", function(){
 			for (var i=0, len=localStorage.length; i<len; i++){					//Loop through items in local storage
 				var singleApptLi = $("<li class='singleAppt' />");
 				singleApptLi.appendTo(savedApptsUl);							//Create list item for each individual saved
-				var apptDetailsUl = $("<ul class='apptDetails' />");
+				var apptDetailsUl = $("<ul class='apptDetails' data-role=\"listview\" data-inset=\"true\" />");
 				apptDetailsUl.appendTo(singleApptLi);							//Creates UL to hold appointment details
 				var editLi = $("<li class='editAppt' />");						//Creates LI to hold edit features for each saved Appt
 				var key = localStorage.key(i);
@@ -98,10 +98,20 @@ $("#home").on("pageinit", function(){
 	//Load Place holder if no data has been saved in local storage
 	
 	function loadPlaceHolder (){
-		for (var n in placeHolder){
+	
+		$.ajax({
+			url: 'xhr/json.php',
+			type: 'GET',
+			dataType: 'jsonp',
+			success: function(response){
+				console.log(response);
+			}
+		});	
+	
+		/*for (var n in placeHolder){
 			var id = Math.floor(Math.random()*100000001);
 			localStorage.setItem(id, JSON.stringify(placeHolder[n]));
-		}
+		}*/
 	}
 
 
