@@ -104,11 +104,26 @@ $("#home").on("pageinit", function(){
 	function loadPlaceHolder (){
 	
 		$.ajax({
-			url: 'xhr/json.php',
-			type: 'GET',
+			url: '_view/placeholders',
 			dataType: 'json',
-			success: function(response){
-				console.log(response);
+			success: function(data){
+				$.each(data.rows, function(index, placeholders){
+					var fname = placeholders.value.fName;
+					var lname = placeholders.value.lName;
+					var date = placeholders.value.date;
+					var interest = placeholders.value.interest;
+					var phonenum = placeholders.value.phoneNum;
+					var phonetype = placeholders.value.phoneType;
+					var time = placeholders.value.time;
+					var comments = placeholders.value.comments;
+					$("#contentlist").append(
+						$('<li>').append(
+							$('<a>').attr('href', '#')
+								.text(fname)
+						)
+					);					
+				});
+				$('#contentlist').listview('refresh');
 			}
 		});	
 	

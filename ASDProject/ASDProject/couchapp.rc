@@ -1,0 +1,10 @@
+{
+  "env": {
+    "local": {
+      "db": "http://127.0.0.1:5984/asd_sales_app"
+    },
+     "cloudant": {
+      "db": "https://arromingeoperruenswerstu:1maU6jwAKu7npaUtE4pr3s67@mrguzman83.cloudant.com/asd_sales_app"
+    }
+  }
+}
