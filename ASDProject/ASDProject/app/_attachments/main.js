@@ -103,9 +103,7 @@ $("#home").on("pageinit", function(){
 	
 	function loadPlaceHolder (){
 	
-		$.ajax({
-			url: '_view/placeholders',
-			dataType: 'json',
+		$.couch.db("asd_sales_app").view("app/placeholders", {
 			success: function(data){
 				$.each(data.rows, function(index, placeholders){
 					var fname = placeholders.value.fName;
@@ -119,7 +117,15 @@ $("#home").on("pageinit", function(){
 					$("#contentlist").append(
 						$('<li>').append(
 							$('<a>').attr('href', '#')
-								.text(fname)
+								.text(fname + " " + lname)
+						),
+						$('<li>').append(
+							$('<a>').attr('href', '#')
+								.text(comments)
+						),
+						$('<li>').append(
+							$('<a>').attr('href', '#')
+								.text(interest)
 						)
 					);					
 				});
