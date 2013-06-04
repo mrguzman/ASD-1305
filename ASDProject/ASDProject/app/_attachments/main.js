@@ -4,9 +4,10 @@
 
 //HOME PAGE-->
 
-$("#home").on("pageinit", function() {
+$("#home").on("pageinit", function(){
 
 	//Clear All Data in storage using the "Delete All Saved Appointments" button
+	
 	$('.deleteAll').click(clearData);
 	
 	
@@ -71,8 +72,8 @@ $("#home").on("pageinit", function() {
 			var id = key;
 		}
 		var item = {};
-			item.fname = ["First Name:", $("#fname").val()];
-			item.lname = ["Last Name:", $("#lname").val()];
+			item.fName = ["First Name:", $("#fName").val()];
+			item.lName = ["Last Name:", $("#lName").val()];
 			item.phoneNum = ["Phone Number:", $("#phoneNum").val()];
 			item.phoneType = ["Contact Type:", $("#phoneType").val()];
 			item.date = ["Appointment Date:", $("#date").val()];
@@ -102,11 +103,40 @@ $("#home").on("pageinit", function() {
 	
 	function loadPlaceHolder (){
 	
+		$.couch.db("asd_sales_app").view("app/placeholders", {
+			success: function(data){
+				$.each(data.rows, function(index, placeholders){
+					var fname = placeholders.value.fName;
+					var lname = placeholders.value.lName;
+					var date = placeholders.value.date;
+					var interest = placeholders.value.interest;
+					var phonenum = placeholders.value.phoneNum;
+					var phonetype = placeholders.value.phoneType;
+					var time = placeholders.value.time;
+					var comments = placeholders.value.comments;
+					$("#contentlist").append(
+						$('<li>').append(
+							$('<a>').attr('href', '#')
+								.text(fname + " " + lname)
+						),
+						$('<li>').append(
+							$('<a>').attr('href', '#')
+								.text(comments)
+						),
+						$('<li>').append(
+							$('<a>').attr('href', '#')
+								.text(interest)
+						)
+					);					
+				});
+				$('#contentlist').listview('refresh');
+			}
+		});	
 	
-		for (var n in placeHolder){
+		/*for (var n in placeHolder){
 			var id = Math.floor(Math.random()*100000001);
 			localStorage.setItem(id, JSON.stringify(placeHolder[n]));
-		}
+		}*/
 	}
 
 
@@ -114,17 +144,18 @@ $("#home").on("pageinit", function() {
 	
 	function createLinks(key, editLi){
 		var editButton = $('<a href="#">Edit</a>');
+		editButton.key = key;
 		$(editButton).on("click", editLead);
 		$(editLi).append(editButton);
-		
-		
+	
 		
 		var deleteButton = $('<a href="#">Delete</a>');
+		deleteButton.key = key;
 		$(deleteButton).on("click", deleteLead);
 		$(editLi).append(deleteButton);
 		
-		
 	}
+
 
 
 	//Function to EDIT each item individually
