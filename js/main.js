@@ -4,10 +4,9 @@
 
 //HOME PAGE-->
 
-$("#home").on("pageinit", function(){
+$("#home").on("pageinit", function() {
 
 	//Clear All Data in storage using the "Delete All Saved Appointments" button
-	
 	$('.deleteAll').click(clearData);
 	
 	
@@ -72,8 +71,8 @@ $("#home").on("pageinit", function(){
 			var id = key;
 		}
 		var item = {};
-			item.fName = ["First Name:", $("#fName").val()];
-			item.lName = ["Last Name:", $("#lName").val()];
+			item.fname = ["First Name:", $("#fname").val()];
+			item.lname = ["Last Name:", $("#lname").val()];
 			item.phoneNum = ["Phone Number:", $("#phoneNum").val()];
 			item.phoneType = ["Contact Type:", $("#phoneType").val()];
 			item.date = ["Appointment Date:", $("#date").val()];
@@ -103,19 +102,11 @@ $("#home").on("pageinit", function(){
 	
 	function loadPlaceHolder (){
 	
-		$.ajax({
-			url: 'xhr/json.php',
-			type: 'GET',
-			dataType: 'json',
-			success: function(response){
-				console.log(response);
-			}
-		});	
 	
-		/*for (var n in placeHolder){
+		for (var n in placeHolder){
 			var id = Math.floor(Math.random()*100000001);
 			localStorage.setItem(id, JSON.stringify(placeHolder[n]));
-		}*/
+		}
 	}
 
 
@@ -123,46 +114,44 @@ $("#home").on("pageinit", function(){
 	
 	function createLinks(key, editLi){
 		var editButton = $('<a href="#">Edit</a>');
-		editButton.key = key;
 		$(editButton).on("click", editLead);
 		$(editLi).append(editButton);
-	
+		
+		
 		
 		var deleteButton = $('<a href="#">Delete</a>');
-		deleteButton.key = key;
 		$(deleteButton).on("click", deleteLead);
 		$(editLi).append(deleteButton);
+		
 		
 	}
 
 
 	//Function to EDIT each item individually
 	
-	function editLead(key){
-		var value = localStorage.getItem(this.key);
+	function editLead(){
+		var key = localStorage.key(this)
+		var value = localStorage.getItem(key);
 		var item = JSON.parse(value);
-		console.log(this.key);
+		console.log(value);
 		
 		
-		$('#fName').value = item.fName[1];
-		$('#lName').value = item.lName[1];
-		$('#phoneNum').value = item.phoneNum[1];
-		$('#phoneType').value = item.phoneType[1];
-		$('#date').value = item.date[1];
-		$('#time').value = item.time[1];
-		$('#interest').value = item.interest[1];
-		$('#comments').value = item.comments[1];
+		
+		$('#fname').val(item.fname[1]);
+		$('#lname').val(item.lname[1]);
+		$('#phoneNum').val(item.phoneNum[1]);
+		$('#phoneType').val(item.phoneType[1]);
+		$('#date').val(item.date[1]);
+		$('#time').val(item.time[1]);
+		$('#interest').val(item.interest[1]);
+		$('#comments').val(item.comments[1]);
 	
 		
 		$("#saveButton").on("click", saveAppt);
 		
 		
-		$('#saveButton').value = "Edit Lead";
-		var editSaveButton = $('#saveButton');
-		$('#saveButton').on("click", required);
-		editSaveButton.key = this.key;
-		 
-
+		
+		
 	}
 
 	

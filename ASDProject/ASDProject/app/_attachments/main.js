@@ -157,33 +157,32 @@ $("#home").on("pageinit", function(){
 	}
 
 
+
 	//Function to EDIT each item individually
 	
-	function editLead(key){
-		var value = localStorage.getItem(this.key);
+	function editLead(){
+		var key = localStorage.key(this)
+		var value = localStorage.getItem(key);
 		var item = JSON.parse(value);
-		console.log(this.key);
+		console.log(value);
 		
 		
-		$('#fName').value = item.fName[1];
-		$('#lName').value = item.lName[1];
-		$('#phoneNum').value = item.phoneNum[1];
-		$('#phoneType').value = item.phoneType[1];
-		$('#date').value = item.date[1];
-		$('#time').value = item.time[1];
-		$('#interest').value = item.interest[1];
-		$('#comments').value = item.comments[1];
+		
+		$('#fname').val(item.fname[1]);
+		$('#lname').val(item.lname[1]);
+		$('#phoneNum').val(item.phoneNum[1]);
+		$('#phoneType').val(item.phoneType[1]);
+		$('#date').val(item.date[1]);
+		$('#time').val(item.time[1]);
+		$('#interest').val(item.interest[1]);
+		$('#comments').val(item.comments[1]);
 	
 		
 		$("#saveButton").on("click", saveAppt);
 		
 		
-		$('#saveButton').value = "Edit Lead";
-		var editSaveButton = $('#saveButton');
-		$('#saveButton').on("click", required);
-		editSaveButton.key = this.key;
-		 
-
+		
+		
 	}
 
 	
